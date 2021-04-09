@@ -2,8 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {
-  App
+  Links
 } from './components';
+
+const App = () => {
+
+return <div className="app">
+    <Links />
+  </div>
+}
+
+
 
 ReactDOM.render(
   <App />,

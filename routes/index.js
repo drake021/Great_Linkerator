@@ -1,9 +1,20 @@
 const apiRouter = require('express').Router();
 
-apiRouter.get("/", (req, res, next) => {
-  res.send({
-    message: "API is under construction!"
-  });
+const{
+  getLinks,
+  createLink
+}= require('../db');
+
+apiRouter.get('/links', async (req, res, next) => {
+  try {
+    const returnedLinks = await getLinks();
+
+    res.send({
+      links: returnedLinks
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = apiRouter;
