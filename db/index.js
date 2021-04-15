@@ -9,15 +9,12 @@ const client = new Client(DB_URL);
 async function getLinks() {
   try {
 
-    const { rows } = await client.query(`
+    const { rows: links } = await client.query(`
     SELECT *
     FROM links;
   `);
 
-
-    console.log(rows);
-
-    return rows;
+    return links;
 
   } catch (error) {
     throw error;
@@ -32,10 +29,29 @@ async function createLink({
 
   try {
     const { rows: [link_] } = await client.query(`
-      INSERT INTO reports(link, comment)
-      VALUES($1, $2, $3, $4)
+      INSERT INTO links(link, comment)
+      VALUES($1, $2)
       RETURNING id, link, comment;
       `, [link, comment]);
+
+    return link_;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+async function addClick({
+  link,
+}) {
+
+  try {
+    const { rows: [link_] } = await client.query(`
+    UPDATE links
+    SET clicks = clicks + 1
+ WHERE link = $1;
+      `, [link]);
 
     return link_;
 
@@ -49,5 +65,6 @@ async function createLink({
 module.exports = {
   client,
   createLink,
-  getLinks
+  getLinks,
+  addClick
 }

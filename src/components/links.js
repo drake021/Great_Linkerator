@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {fetchLinks, createNewLink } from '../api/index.js';
+import { fetchLinks, createNewLink, addClick_ } from '../api/index.js';
 
 const Links = () => {
     const [linkList, setLinkList] = useState([]);
@@ -16,8 +16,9 @@ const Links = () => {
             });
     }, []);
 
+
     const submitNewLink = () => {
-        return <div id="submit-main">
+        return <div id="linklist-main">
             <header>
                 <h3>Add A Link To The Linkerator</h3>
             </header>
@@ -25,7 +26,7 @@ const Links = () => {
                 event.preventDefault();
                 alert("Link Created!");
                 try {
-                    await createNewLink(link, tags, comment);
+                    await createNewLink(link, comment);
                 } catch (error) {
                     console.error(error);
                 }
@@ -41,7 +42,7 @@ const Links = () => {
                         setLink(e.target.value)
                     }}
                 />
-                <label id="tags-label">Tags</label>
+                {/* <label id="tags-label">Tags</label>
                 <input
                     id="link-tag"
                     type="text"
@@ -50,7 +51,7 @@ const Links = () => {
                     onChange={function (e) {
                         setTags(e.target.value)
                     }}
-                />
+                /> */}
                 <label id="comments-label">Comments</label>
                 <input
                     id="link-comments"
@@ -67,23 +68,22 @@ const Links = () => {
     }
 
 
+    return (
 
-
-
-return (
-
-    <div id="links-main">
-        <h1>The Great Linkerator</h1>
-        {linkList.map(({ id, link, clicks, tags, comment }) => (
-            <div key={id} id="links">
-                <h3 >Link {link}</h3>
-                <p>Clicks {clicks}</p>
-                <p>Tags {tags}</p>
-                <p>Comment {comment}</p>
-            </div>
-        ))}
-    </div>
-);
+        <div id="linklist-main">
+            <h1>The Great Linkerator</h1>
+            {submitNewLink()}
+            <h3>List of Links</h3>
+            {linkList.map(({ id, link, clicks, comment }) => (
+                <div key={id} id="linklist">
+                    <h3 >Link:  <a href={link} onclick={addClick_({link})} target="_blank">{link}</a></h3>
+                    <p>Clicks:  {clicks}</p>
+                    {/* <p>Tags {tags}</p> */}
+                    <p>Comment:  {comment}</p>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 export default Links;

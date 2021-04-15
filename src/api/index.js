@@ -1,17 +1,16 @@
-const BASE_URL = 'http://localhost:5000';
-
 async function fetchLinks() {
   try {
-      const response = await fetch(`${BASE_URL}/api/links`)
+      const response = await fetch(`/api/links`)
       const data = await response.json();
+      console.log(data);
       return data;
   } catch (error) {
       throw error;
   }
 }
 
-const createNewLink = async (link, tags, comment) => {
-  const resp = await fetch(`${BASE_URL}/links`,
+const createNewLink = async (link, comment) => {
+  const resp = await fetch(`/api/links`,
       {
           method: "POST",
           headers: {
@@ -19,7 +18,6 @@ const createNewLink = async (link, tags, comment) => {
           },
           body: JSON.stringify({
               link,
-              tags,
               comment
           })
       }
@@ -27,7 +25,22 @@ const createNewLink = async (link, tags, comment) => {
   return await resp.json();
 };
 
+const addClick_ = async (link) => {
+  return await fetch(`/api/links`, {
+    method: "PATCH",
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => response.json())
+    .then(result => {
+        return result;
+    })
+    .catch(console.error)
+}
+
 export {
   fetchLinks,
-  createNewLink
+  createNewLink,
+  addClick_
 };

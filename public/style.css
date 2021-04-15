@@ -1,0 +1,55 @@
+#root {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: unset;
+    color: #e63946;
+}
+
+button {
+    margin: 5px;
+    background-color: #a8dadc;
+    color: #e63946;
+    font-weight: bold;
+    flex: 0 0 100px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 12px;
+    border: 1px solid black;
+    width: 80px;
+    height: 40px;
+}
+button:hover {
+    background-color: white;
+}
+button.active {
+    background-color: #e5cfe5;
+}
+
+#linklist-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+  #linklist {
+        width: 900px;
+        margin: 20px auto;
+        padding: 5px;
+        border: thick double #32a1ce;
+        display: grid;
+        text-align: center;
+        background-color: #1d3557;
+  }
+
+  #submit {
+    width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: thick double #32a1ce;
+    background-color: #1d3557;
+    display: grid;
+    text-align: center;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+}

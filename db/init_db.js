@@ -1,4 +1,3 @@
-// code to build and initialize DB goes here
 const {
   client,
   createLink
@@ -13,8 +12,8 @@ async function dropTables() {
     console.log('Starting to drop tables...');
     
     client.query(`
-      DROP TABLE IF EXISTS comments;
-      DROP TABLE IF EXISTS reports;
+      DROP TABLE IF EXISTS links;
+      DROP TABLE IF EXISTS tags;
     `);
 
     console.log('Finished dropping tables!');
@@ -34,13 +33,13 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         link varchar(255) UNIQUE NOT NULL,
         clicks INTEGER,
-        comment TEXT NOT NULL,
+        comment TEXT NOT NULL
       );
 
       CREATE TABLE tags(
         id SERIAL PRIMARY KEY,
-        tags varchar(255) UNIQUE NOT NULL,
-      )
+        tags varchar(255) UNIQUE NOT NULL
+      );
     `);
 
     console.log('Finished constructing tables!');
@@ -78,7 +77,7 @@ async function createInitialLinks() {
 
 async function buildDB() {
   try {
-
+    client.connect();
     await dropTables();
     await buildTables();
     await createInitialLinks();
@@ -91,5 +90,5 @@ async function buildDB() {
 
 
 buildDB()
-  .catch(console.error)
+  .catch(e => console.log(e))
   .finally(() => client.end());
